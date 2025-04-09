@@ -3,6 +3,7 @@ version: '3.8'
 services:
   backend:
     build: ./backend
+    platform: linux/amd64 
     container_name: style-backend
     ports:
       - "8002:8000"
@@ -12,6 +13,7 @@ services:
 
   frontend:
     build: ./frontend
+    platform: linux/amd64 
     container_name: style-frontend
     ports:
       - "8501:8501"
