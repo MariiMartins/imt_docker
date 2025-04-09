@@ -8,7 +8,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 st.set_page_config(page_title="Transferência de Estilo", layout="centered")
-st.title("🎨 Transferência de Estilo Neural")
+st.title("Transferência de Estilo Neural")
 
 # Estilos disponíveis
 available_styles = ["candy", "mosaic", "udnie", "rain_princess", "pointilism", "custom"]
@@ -42,7 +42,7 @@ if st.button("Aplicar Estilo"):
     elif style_name == "custom" and not style_file:
         st.warning("Por favor, envie também a imagem de estilo para a opção 'custom'.")
     else:
-        st.info("🖌️ Processando a imagem... Aguarde...")
+        st.info("Processando a imagem... Aguarde...")
         start_time = time.time()
 
         files = {"content_file": content_file.getvalue()}
@@ -51,8 +51,23 @@ if st.button("Aplicar Estilo"):
 
         data = {"style_name": style_name, "alpha": str(alpha)}
 
-        response = requests.post("http://backend:8002/transfer", files=files, data=data)
+        # --- Retry logic ---
+        MAX_RETRIES = 10
+        WAIT_SECONDS = 2
+        url = "http://backend:8002/transfer"
 
+        for attempt in range(MAX_RETRIES):
+            try:
+                response = requests.post(url, files=files, data=data)
+                break  # se deu certo, sai do loop
+            except requests.ConnectionError:
+                st.warning(f"[{attempt+1}/{MAX_RETRIES}] Backend ainda não está pronto. Tentando novamente em {WAIT_SECONDS}s...")
+                time.sleep(WAIT_SECONDS)
+        else:
+            st.error("❌ Não foi possível conectar ao backend após várias tentativas.")
+            st.stop()
+
+        # --- Resposta ---
         elapsed = int(time.time() - start_time)
 
         if response.status_code == 200:

@@ -13,7 +13,7 @@ num_content_layers = len(content_layers)
 num_style_layers = len(style_layers)
 
 def load_vgg19_model(weights_path):
-    print("🔄 Carregando VGG19 com pesos locais...")
+    print("Carregando VGG19 com pesos locais...")
     vgg = vgg19.VGG19(include_top=False, weights=None)
     vgg.load_weights(weights_path)
     vgg.trainable = False
