@@ -51,7 +51,7 @@ if st.button("Aplicar Estilo"):
 
         data = {"style_name": style_name, "alpha": str(alpha)}
 
-        response = requests.post("http://backend:8002/transfer", files=files, data=data)
+        response = requests.post("http://backend:8000/transfer", files=files, data=data)
 
         elapsed = int(time.time() - start_time)
 
