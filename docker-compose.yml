@@ -5,7 +5,7 @@ services:
     build: ./backend
     container_name: style-backend
     ports:
-      - "8000:8000"
+      - "8002:8002"
     networks:
       - app_network
     restart: always
