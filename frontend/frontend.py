@@ -8,7 +8,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 st.set_page_config(page_title="Transferência de Estilo", layout="centered")
-st.title("🎨 Transferência de Estilo Neural")
+st.title("Transferência de Estilo Neural")
 
 # Estilos disponíveis
 available_styles = ["candy", "mosaic", "udnie", "rain_princess", "pointilism", "custom"]
@@ -42,7 +42,7 @@ if st.button("Aplicar Estilo"):
     elif style_name == "custom" and not style_file:
         st.warning("Por favor, envie também a imagem de estilo para a opção 'custom'.")
     else:
-        st.info("🖌️ Processando a imagem... Aguarde...")
+        st.info("Processando a imagem... Aguarde...")
         start_time = time.time()
 
         files = {"content_file": content_file.getvalue()}
