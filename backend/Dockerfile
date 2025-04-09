@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8002
 
 # Comando padrão
-CMD ["uvicorn", "backend:app", "--host", "0.0.0.0", "--port", "8002"]
+CMD ["uvicorn", "backend:app", "--host", "0.0.0.0", "--port", "8000"]

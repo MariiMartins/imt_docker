@@ -54,7 +54,7 @@ if st.button("Aplicar Estilo"):
         # --- Retry logic ---
         MAX_RETRIES = 10
         WAIT_SECONDS = 2
-        url = "http://backend:8002/transfer"
+        url = "http://backend:8000/transfer"
 
         for attempt in range(MAX_RETRIES):
             try:

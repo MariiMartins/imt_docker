@@ -1,5 +1,5 @@
 ## Grupo Composto por:
- - Jõao
+- João Pedro
 - Kanan
 - Mariana
 
