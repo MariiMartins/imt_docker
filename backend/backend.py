@@ -65,3 +65,7 @@ async def transfer_style(
     except Exception as e:
         print(f"[ERRO] Falha ao aplicar o estilo: {e}")
         return JSONResponse(status_code=500, content={"error": "Erro interno ao processar a imagem."})
+
+@app.get("/ping")
+def ping():
+    return {"message": "pong"}

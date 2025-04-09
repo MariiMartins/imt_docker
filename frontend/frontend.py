@@ -37,6 +37,19 @@ if style_name == "custom" and style_file:
 
 # Botão para aplicar o estilo
 if st.button("Aplicar Estilo"):
+    backend_url = "http://backend:8000"
+
+    # Verifica se o backend está online
+    try:
+        ping_response = requests.get(f"{backend_url}/ping", timeout=2)
+        if ping_response.status_code != 200:
+            st.error("❌ Backend indisponível. Tente novamente em instantes.")
+            st.stop()
+    except requests.exceptions.RequestException:
+        st.error("❌ Não foi possível conectar ao backend. Verifique se ele está rodando.")
+        st.stop()
+
+    # Valida uploads
     if not content_file:
         st.warning("Por favor, envie a imagem de conteúdo.")
     elif style_name == "custom" and not style_file:
@@ -51,23 +64,8 @@ if st.button("Aplicar Estilo"):
 
         data = {"style_name": style_name, "alpha": str(alpha)}
 
-        # --- Retry logic ---
-        MAX_RETRIES = 10
-        WAIT_SECONDS = 2
-        url = "http://backend:8000/transfer"
+        response = requests.post(f"{backend_url}/transfer", files=files, data=data)
 
-        for attempt in range(MAX_RETRIES):
-            try:
-                response = requests.post(url, files=files, data=data)
-                break  # se deu certo, sai do loop
-            except requests.ConnectionError:
-                st.warning(f"[{attempt+1}/{MAX_RETRIES}] Backend ainda não está pronto. Tentando novamente em {WAIT_SECONDS}s...")
-                time.sleep(WAIT_SECONDS)
-        else:
-            st.error("❌ Não foi possível conectar ao backend após várias tentativas.")
-            st.stop()
-
-        # --- Resposta ---
         elapsed = int(time.time() - start_time)
 
         if response.status_code == 200:
