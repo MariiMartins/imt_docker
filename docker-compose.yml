@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     build: ./backend
-    platform: linux/amd64 
+    platform: linux/amd64
     container_name: style-backend
     ports:
       - "8002:8000"

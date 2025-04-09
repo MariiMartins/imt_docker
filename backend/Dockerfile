@@ -1,18 +1,18 @@
-# Imagem base com TensorFlow + Python 3.10
-FROM tensorflow/tensorflow:2.15.0
+# Força arquitetura compatível com Apple Silicon (Mac M1/M2)
+FROM --platform=linux/amd64 tensorflow/tensorflow:2.15.0
 
-# Diretório de trabalho
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia e instala dependências
+# Copia e instala as dependências
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia o restante da aplicação
 COPY . .
 
-# Expõe a porta da API
+# Expõe a porta que o app escuta internamente
 EXPOSE 8000
 
-# Comando padrão
+# Comando para iniciar o backend
 CMD ["uvicorn", "backend:app", "--host", "0.0.0.0", "--port", "8000"]
